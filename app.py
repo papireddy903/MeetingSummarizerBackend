@@ -4,6 +4,9 @@ from google import genai
 from google.genai import types
 import PyPDF2
 import docx
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 app = Flask(__name__)
 CORS(app)
@@ -44,3 +47,35 @@ def summarize():
     
     except Exception as e:
         return jsonify({"error": str(e)})
+
+
+@app.route("/api/send_email", methods=["POST"])
+def send_email():
+    try:
+        data = request.json
+        email = data.get("email")
+        summary = data.get("summary")
+
+        if not email or not summary:
+            return jsonify({"error": "Email and summary are required"}), 400
+
+        sender_email = "your_email@gmail.com"
+        sender_password = "your_app_password"
+
+        msg = MIMEMultipart()
+        msg["From"] = sender_email
+        msg["To"] = email
+        msg["Subject"] = "Meeting Summary"
+        msg.attach(MIMEText(summary, "plain"))
+
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(sender_email, sender_password)
+        server.sendmail(sender_email, email, msg.as_string())
+        server.quit()
+
+        return jsonify({"message": "Email sent successfully"})
+    
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
