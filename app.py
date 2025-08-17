@@ -59,8 +59,8 @@ def send_email():
         if not email or not summary:
             return jsonify({"error": "Email and summary are required"}), 400
 
-        sender_email = "your_email@gmail.com"
-        sender_password = "your_app_password"
+        sender_email = "paprireddyeppala903@gmail.com"
+        sender_password = "P@pireddy340"
 
         msg = MIMEMultipart()
         msg["From"] = sender_email
