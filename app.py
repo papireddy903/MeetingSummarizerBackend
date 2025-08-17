@@ -60,7 +60,7 @@ def send_email():
             return jsonify({"error": "Email and summary are required"}), 400
 
         sender_email = "paprireddyeppala903@gmail.com"
-        sender_password = "P@pireddy340"
+        sender_password = "vrgn skfv fysg zmnp"
 
         msg = MIMEMultipart()
         msg["From"] = sender_email
