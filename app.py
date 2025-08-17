@@ -60,7 +60,7 @@ def send_email():
             return jsonify({"error": "Email and summary are required"}), 400
 
         sender_email = "paprireddyeppala903@gmail.com"
-        sender_password = "vrgn skfv fysg zmnp"
+        sender_password = "vrgnskfvfysgzmnp"
 
         msg = MIMEMultipart()
         msg["From"] = sender_email
@@ -69,8 +69,10 @@ def send_email():
         msg.attach(MIMEText(summary, "plain"))
 
         server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.set_debuglevel(1)  # 🔥 this prints SMTP conversation
         server.starttls()
         server.login(sender_email, sender_password)
+
         server.sendmail(sender_email, email, msg.as_string())
         server.quit()
 
